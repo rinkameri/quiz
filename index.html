@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шутка для друга</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #1a1a1a, #2b0054, #4a148c);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 600px;
+            padding: 15px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .question-box {
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .question-btn {
+            margin: 10px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: #1a1a1a;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .question-btn:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            margin: 0 0 20px 0;
+            font-size: 22px;
+        }
+
+        .binance-logo {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 80px;
+            opacity: 0.7;
+            animation: float 3s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .blink {
+            animation: blink 0.1s 10;
+        }
+
+        @media (max-width: 480px) {
+            .question-btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Вопросы -->
+        <div class="question-box" id="question1">
+            <h2>Ты гей?</h2>
+            <button class="question-btn" onclick="nextQuestion()">Да</button>
+            <button class="question-btn" onclick="nextQuestion()">Нет</button>
+        </div>
+
+        <div class="question-box" id="question2">
+            <h2>Ты за Трампа?</h2>
+            <button class="question-btn" onclick="nextQuestion()">Да</button>
+            <button class="question-btn" onclick="nextQuestion()">Нет</button>
+        </div>
+
+        <div class="question-box" id="question3">
+            <h2>Веришь в плоскую Землю?</h2>
+            <button class="question-btn" onclick="nextQuestion()">Да</button>
+            <button class="question-btn" onclick="nextQuestion()">Нет</button>
+        </div>
+
+        <div class="question-box" id="question4">
+            <h2>Любишь ананасы на пицце?</h2>
+            <button class="question-btn" onclick="nextQuestion()">Да</button>
+            <button class="question-btn" onclick="nextQuestion()">Нет</button>
+        </div>
+
+        <div class="question-box" id="question5">
+            <h2>Смотришь Дом-2?</h2>
+            <button class="question-btn" onclick="nextQuestion()">Да</button>
+            <button class="question-btn" onclick="nextQuestion()">Нет</button>
+        </div>
+
+        <div class="question-box" id="question6">
+            <h2>Хочешь 1.000.000$?</h2>
+            <button class="question-btn" onclick="triggerScare()">Да</button>
+            <button class="question-btn" onclick="triggerScare()">Нет</button>
+        </div>
+    </div>
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Binance_Logo.png" 
+         class="binance-logo" 
+         alt="Binance">
+
+    <audio id="alarm">
+        <source src="https://actions.google.com/sounds/v1/alarms/medium_bell_short.ogg" type="audio/ogg">
+    </audio>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 6;
+
+        function showQuestion(id) {
+            document.querySelectorAll('.question-box').forEach(q => q.style.display = 'none');
+            document.getElementById(`question`).style.display = 'block';
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showQuestion(totalQuestions);
+            }
+        }
+
+        function triggerScare() {
+            // Мигание экрана
+            document.body.classList.add('blink');
+            
+            // Воспроизведение звука
+            const audio = document.getElementById('alarm');
+            audio.volume = 1;
+            audio.play();
+
+            // Сообщение
+            setTimeout(() => {
+                alert('🚨 ВАШИ ДАННЫЕ ОТПРАВЛЕНЫ В ФСБ! 🚨');
+                document.body.classList.remove('blink');
+            }, 2000);
+        }
+
+        // Запуск
+        showQuestion(1);
+    </script>
+</body>
+</html>
